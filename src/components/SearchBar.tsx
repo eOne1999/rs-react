@@ -1,6 +1,5 @@
 import React from 'react';
-
-type SearchState = { searchValue: string };
+import { SearchState } from '../types';
 
 class SearchBar extends React.Component<object, SearchState> {
   constructor(params: SearchState) {

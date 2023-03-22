@@ -17,6 +17,22 @@ body {
   box-sizing: border-box;
 }
 
+a:focus,
+a:active {
+   outline: none;
+}
+a {
+   color: inherit;
+}
+
+a,
+a:visited {
+   text-decoration: none;
+}
+a:hover {
+   text-decoration: none;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
