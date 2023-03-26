@@ -2,14 +2,9 @@ import React from 'react';
 import InputField from './InputField';
 
 class Form extends React.Component {
-  constructor(props) {
+  constructor(props: object) {
     super(props);
-    this.state = { value: '' };
-  }
-
-  addCard() {
-    const prop = this.props;
-    console.log('Submit');
+    this.state = '';
   }
 
   render() {
@@ -18,7 +13,6 @@ class Form extends React.Component {
         className="form"
         onSubmit={(event) => {
           event.preventDefault();
-          this.addCard();
         }}
       >
         <InputField label="Author" type="name" id="" className="form__item" />
@@ -28,9 +22,9 @@ class Form extends React.Component {
           <InputField label="Female" type="radio" id="" value="option1" />
         </p>
         <InputField label="Date" type="date" id="" className="form__item" />
-        <label htmlFor="selectCountry">
+        <label htmlFor="country">
           Country:
-          <select id="selectCountry" className="form__item" />
+          <select id="country" className="form__item" aria-label="country" />
         </label>
         <InputField label="Upload image" type="file" id="" className="form__item" />
         <InputField label="I consent to my personal data" type="checkbox" id="" />

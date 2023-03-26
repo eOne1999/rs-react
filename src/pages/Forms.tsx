@@ -1,10 +1,10 @@
 import React from 'react';
 import Form from '../components/Form';
 
-class Forms extends React.Component<object> {
+class Forms extends React.Component {
   constructor(props: object) {
     super(props);
-    this.state = { value: '' };
+    this.state = '';
   }
 
   render(): React.ReactNode {
