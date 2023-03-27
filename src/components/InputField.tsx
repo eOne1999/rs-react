@@ -14,6 +14,7 @@ class InputField extends React.Component<TInputField> {
           value={input.value}
           name={input.id}
           className={input.className}
+          required
         />
         {input.error}
       </label>

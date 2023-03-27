@@ -22,3 +22,10 @@ export type TInputField = {
   error?: string;
   className?: string;
 };
+
+export type TCountry = {
+  name: string;
+  dial_code: string;
+  code: string;
+  flag: string;
+};
