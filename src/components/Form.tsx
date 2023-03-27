@@ -16,17 +16,23 @@ class Form extends React.Component {
           event.preventDefault();
         }}
       >
-        <InputField label="Author" type="name" id="" className="form__item" />
+        <InputField
+          label="Author"
+          type="name"
+          name="author"
+          placeholder="Full Name"
+          className="form__item"
+        />
         <p>
-          Sex:
-          <InputField label="Male" type="radio" id="" value="option1" />
-          <InputField label="Female" type="radio" id="" value="option1" />
+          Are you a professional photographer?
+          <InputField label="Yes" type="radio" name="photographer" value="yes" />
+          <InputField label="No" type="radio" name="photographer" value="no" />
         </p>
-        <InputField label="Date" type="date" id="" className="form__item" />
+        <InputField label="Date of photo" type="date" name="date" className="form__item" />
         <label htmlFor="country">
-          Country:
-          <select id="country" className="form__item" aria-label="country">
-            <option value="" disabled selected>
+          Country
+          <select id="country" className="form__item" aria-label="country" defaultValue="default">
+            <option value="default" disabled>
               Select country
             </option>
             {countries.map((country) => (
@@ -36,8 +42,13 @@ class Form extends React.Component {
             ))}
           </select>
         </label>
-        <InputField label="Upload image" type="file" id="" className="form__item" />
-        <InputField label="I consent to my personal data" type="checkbox" id="" />
+        <InputField label="Upload image" type="file" name="image" className="form__item" />
+        <InputField
+          label="I consent to my personal data"
+          type="checkbox"
+          name="confirmation"
+          className="form__item"
+        />
         <input type="submit" value="Submit" />
       </form>
     );

@@ -15,12 +15,14 @@ export interface ICard {
 
 export type TInputField = {
   type: string;
-  id: string;
+  id?: string;
+  name: string;
   value?: string;
   label?: string;
   ref?: React.RefObject<HTMLInputElement>;
   error?: string;
   className?: string;
+  placeholder?: string;
 };
 
 export type TCountry = {

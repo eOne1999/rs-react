@@ -8,12 +8,13 @@ class InputField extends React.Component<TInputField> {
       <label htmlFor={input.id}>
         {input.label}
         <input
-          id={input.id}
+          id={input.name}
           type={input.type}
           ref={input.ref}
           value={input.value}
-          name={input.id}
+          name={input.name}
           className={input.className}
+          placeholder={input.placeholder}
           required
         />
         {input.error}
