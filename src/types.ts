@@ -3,17 +3,14 @@ import React from 'react';
 export type SearchState = { searchValue: string };
 
 export interface ICard {
-  format?: string;
-  width?: number;
-  height?: number;
-  filename?: string;
-  id?: number;
+  format: string;
+  width: number;
+  height: number;
+  filename: string;
+  id: number;
   author: string;
-  author_url?: string;
-  post_url?: string;
-  country?: string;
-  date?: string;
-  photographer?: string;
+  author_url: string;
+  post_url: string;
 }
 
 export type TInputField = {
@@ -27,7 +24,6 @@ export type TInputField = {
   className?: string;
   placeholder?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  accept?: string;
 };
 
 export type TCountry = {
@@ -44,10 +40,10 @@ export type TForm = {
 
 export type TFormData = {
   author: string;
-  photographer?: string;
-  date?: string;
+  photographer: string;
+  date: string;
   country: string;
-  image?: string;
+  image: string;
 };
 
 export type TFormCard = {
@@ -56,4 +52,9 @@ export type TFormCard = {
   country: string;
   date: string | undefined;
   photographer: string | undefined;
+};
+
+export type TPopup = {
+  active: boolean;
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
 };

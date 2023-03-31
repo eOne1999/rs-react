@@ -1,160 +1,139 @@
-import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import InputField from './InputField';
 import countries from '../assets/countriesList';
-import { TForm } from '../types';
+import { TFormData } from '../types';
 import FormCard from './FormCard';
+import Popup from './Popup';
 
-class Form extends React.Component<object, TForm> {
-  inputRef: React.RefObject<HTMLInputElement>;
+function Form() {
+  const [formData, setFormData] = useState<TFormData>({
+    author: '',
+    photographer: '',
+    date: '',
+    country: '',
+    image: '',
+  });
+  const [submitData, setSubmitData] = useState<TFormData[]>([]);
+  const [popupActive, setPopupActive] = useState(false);
 
-  formRef: React.RefObject<HTMLFormElement>;
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const formRef = React.useRef<HTMLFormElement>(null);
+  const cardsRef = React.useRef<HTMLDivElement>(null);
 
-  cardsRef: React.RefObject<HTMLDivElement>;
-
-  constructor(props: TForm) {
-    super(props);
-    this.state = {
-      formData: {
-        author: '',
-        photographer: '',
-        date: '',
-        country: '',
-        image: '',
-      },
-      submit: [],
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-
-    this.inputRef = React.createRef();
-    this.formRef = React.createRef();
-    this.cardsRef = React.createRef();
-  }
-
-  handleChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
-    if (this.inputRef.current?.files?.length) {
-      const link = URL.createObjectURL(this.inputRef.current.files[0]);
-      this.setState((prevState) => ({
-        ...prevState,
-        formData: {
-          ...prevState.formData,
-          image: link,
-        },
-      }));
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    let imgUrl = '';
+    if (inputRef.current?.files?.length) {
+      imgUrl = URL.createObjectURL(inputRef.current.files[0]);
     }
 
-    this.setState((prevState) => ({
-      ...prevState,
-      formData: {
-        ...prevState.formData,
-        [event.target.name]: event.target.value,
-      },
-    }));
-  }
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+      image: imgUrl,
+    });
+  };
 
-  handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.setState((prevState) => ({
-      ...prevState,
-      submit: [...prevState.submit, prevState.formData],
-    }));
-    this.formRef.current?.reset();
-  }
+    setSubmitData([...submitData, formData]);
+    formRef.current?.reset();
+    setPopupActive(true);
+  };
 
-  render() {
-    const currState = this.state;
-    return (
-      <>
-        <form className="form" onSubmit={this.handleSubmit} ref={this.formRef}>
+  return (
+    <>
+      <form className="form" onSubmit={handleSubmit} ref={formRef}>
+        <InputField
+          label="Author"
+          type="text"
+          name="author"
+          placeholder="Full Name"
+          className="form__item"
+          onChange={handleChange}
+        />
+        <p>
+          Are you a professional photographer?
           <InputField
-            label="Author"
-            type="text"
-            name="author"
-            placeholder="Full Name"
-            className="form__item"
-            onChange={this.handleChange}
+            label="Yes"
+            type="radio"
+            name="photographer"
+            value="yes"
+            id="yes"
+            onChange={handleChange}
           />
-          <p>
-            Are you a professional photographer?
-            <InputField
-              label="Yes"
-              type="radio"
-              name="photographer"
-              value="yes"
-              id="yes"
-              onChange={this.handleChange}
-            />
-            <InputField
-              label="No"
-              type="radio"
-              name="photographer"
-              value="no"
-              id="no"
-              onChange={this.handleChange}
-            />
-          </p>
           <InputField
-            label="Date of photo"
-            type="date"
-            name="date"
-            className="form__item"
-            onChange={this.handleChange}
+            label="No"
+            type="radio"
+            name="photographer"
+            value="no"
+            id="no"
+            onChange={handleChange}
           />
-          <label htmlFor="country">
-            Country
-            <select
-              id="country"
-              className="form__item"
-              aria-label="country"
-              defaultValue="default"
-              name="country"
-              onChange={this.handleChange}
-            >
-              <option value="default" disabled>
-                Select country
+        </p>
+        <InputField
+          label="Date of photo"
+          type="date"
+          name="date"
+          className="form__item"
+          onChange={handleChange}
+        />
+        <label htmlFor="country">
+          Country
+          <select
+            id="country"
+            className="form__item"
+            aria-label="country"
+            defaultValue="default"
+            name="country"
+            onChange={handleChange}
+          >
+            <option value="default" disabled>
+              Select country
+            </option>
+            {countries.map((country) => (
+              <option key={country.code} value={country.name}>
+                {country.name}
               </option>
-              {countries.map((country) => (
-                <option key={country.code} value={country.name}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor="file">
-            <input
-              type="file"
-              name="file"
-              className="form__item"
-              accept="image/*"
-              onChange={this.handleChange}
-              ref={this.inputRef}
-            />
-          </label>
-          <InputField
-            label="I consent to my personal data"
-            type="checkbox"
-            name="confirmation"
+            ))}
+          </select>
+        </label>
+        <label htmlFor="file">
+          Upload photo
+          <input
+            type="file"
+            name="image"
             className="form__item"
+            accept="image/*"
+            onChange={handleChange}
+            ref={inputRef}
           />
-          <input type="submit" value="Submit" />
-        </form>
-        <div className="cards" ref={this.cardsRef}>
-          {currState.submit.map((item) => (
-            <FormCard
-              key={uuidv4()}
-              author={item.author}
-              country={item.country}
-              date={item.date}
-              photographer={item.photographer}
-              image={item.image}
-            />
-          ))}
-        </div>
-      </>
-    );
-  }
+        </label>
+        <InputField
+          label="I consent to my personal data"
+          type="checkbox"
+          name="confirmation"
+          className="form__item"
+        />
+        <input type="submit" value="Submit" />
+      </form>
+      <div className="cards" ref={cardsRef}>
+        {submitData.map((item) => (
+          <FormCard
+            key={uuid()}
+            author={item.author}
+            country={item.country}
+            date={item.date}
+            photographer={item.photographer}
+            image={item.image}
+          />
+        ))}
+      </div>
+      <Popup active={popupActive} setActive={setPopupActive} />
+    </>
+  );
 }
 
 export default Form;
