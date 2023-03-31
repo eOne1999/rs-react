@@ -33,11 +33,6 @@ export type TCountry = {
   flag: string;
 };
 
-export type TForm = {
-  formData: TFormData;
-  submit: TFormData[];
-};
-
 export type TFormData = {
   author: string;
   photographer: string;
@@ -57,4 +52,11 @@ export type TFormCard = {
 export type TPopup = {
   active: boolean;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export type TForm = {
+  submitData: TFormData[];
+  setSubmitData: React.Dispatch<React.SetStateAction<TFormData[]>>;
+  popupActive: boolean;
+  setPopupActive: React.Dispatch<React.SetStateAction<boolean>>;
 };
