@@ -1,89 +1,75 @@
-import React, { useState } from 'react';
-import InputField from './InputField';
+import React from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import countries from '../assets/countriesList';
 import { TForm, TFormData } from '../types';
 
 function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
-  const [formData, setFormData] = useState<TFormData>({
-    author: '',
-    photographer: '',
-    date: '',
-    country: '',
-    image: '',
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<TFormData>();
 
-  const inputRef = React.useRef<HTMLInputElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    let imgUrl = '';
-    if (inputRef.current?.files?.length) {
-      imgUrl = URL.createObjectURL(inputRef.current.files[0]);
-    }
-
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-      image: imgUrl,
-    });
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const submit: SubmitHandler<TFormData> = (data) => {
+    const formData = data;
+    const file = data.file ? data.file[0] : null;
+    const imgUrl = file ? URL.createObjectURL(file) : undefined;
+    formData.image = imgUrl;
     setSubmitData([...submitData, formData]);
-    formRef.current?.reset();
     setPopupActive(true);
+    reset();
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit} ref={formRef}>
-      <InputField
-        label="Author"
-        type="text"
-        name="author"
-        placeholder="Full Name"
-        className="form__item"
-        onChange={handleChange}
-      />
+    <form className="form" onSubmit={handleSubmit(submit)} ref={formRef}>
+      <label htmlFor="author">
+        Author
+        <input
+          type="text"
+          placeholder="Full Name"
+          className="form__item"
+          {...register('author', {
+            required: 'This field is required',
+            pattern: {
+              value: /^[A-Z][a-z,.'-]+\s[A-Z][a-z,.'-]+$/,
+              message: 'Should contain the first and last name with a capital letter',
+            },
+          })}
+        />
+        {errors.author && <span className="form__error">{errors.author?.message}</span>}
+      </label>
+
       <p>
         Are you a professional photographer?
-        <InputField
-          label="Yes"
-          type="radio"
-          name="photographer"
-          value="yes"
-          id="yes"
-          onChange={handleChange}
-        />
-        <InputField
-          label="No"
-          type="radio"
-          name="photographer"
-          value="no"
-          id="no"
-          onChange={handleChange}
-        />
+        <label htmlFor="photographer">
+          Yes
+          <input type="radio" value="yes" {...register('photographer', { required: true })} />
+        </label>
+        <label htmlFor="photographer">
+          No
+          <input type="radio" value="no" {...register('photographer', { required: true })} />
+        </label>
+        {errors.photographer && <span>This field is required</span>}
       </p>
-      <InputField
-        label="Date of photo"
-        type="date"
-        name="date"
-        className="form__item"
-        onChange={handleChange}
-      />
+
+      <label htmlFor="date">
+        Date of photo
+        <input type="date" className="form__item" {...register('date', { required: true })} />
+        {errors.date && <span>This field is required</span>}
+      </label>
+
       <label htmlFor="country">
         Country
         <select
-          id="country"
           className="form__item"
           aria-label="country"
-          defaultValue="default"
-          name="country"
-          onChange={handleChange}
+          defaultValue=""
+          {...register('country', { required: true })}
         >
-          <option value="default" disabled>
+          <option value="" disabled>
             Select country
           </option>
           {countries.map((country) => (
@@ -92,24 +78,29 @@ function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
             </option>
           ))}
         </select>
+        {errors.country && <span>This field is required</span>}
       </label>
+
       <label htmlFor="file">
         Upload photo
         <input
           type="file"
-          name="image"
           className="form__item"
           accept="image/*"
-          onChange={handleChange}
-          ref={inputRef}
+          {...register('file', { required: true })}
         />
+        {errors.file && <span>This field is required</span>}
       </label>
-      <InputField
-        label="I consent to my personal data"
-        type="checkbox"
-        name="confirmation"
-        className="form__item"
-      />
+
+      <label htmlFor="confirmation">
+        I consent to my personal data
+        <input
+          type="checkbox"
+          className="form__item"
+          {...register('confirmation', { required: true })}
+        />
+        {errors.confirmation && <span>This field is required</span>}
+      </label>
       <input type="submit" value="Submit" />
     </form>
   );

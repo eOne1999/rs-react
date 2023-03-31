@@ -13,19 +13,6 @@ export interface ICard {
   post_url: string;
 }
 
-export type TInputField = {
-  type: string;
-  id?: string;
-  name: string;
-  value?: string;
-  label?: string;
-  ref?: React.RefObject<HTMLInputElement>;
-  error?: string;
-  className?: string;
-  placeholder?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
-};
-
 export type TCountry = {
   name: string;
   dial_code: string;
@@ -38,7 +25,9 @@ export type TFormData = {
   photographer: string;
   date: string;
   country: string;
-  image: string;
+  image: string | undefined;
+  file: FileList;
+  confirmation: boolean;
 };
 
 export type TFormCard = {
