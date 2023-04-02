@@ -1,7 +1,5 @@
 import React from 'react';
 
-export type SearchState = { searchValue: string };
-
 export interface ICard {
   format: string;
   width: number;

@@ -1,27 +1,18 @@
-import React from 'react';
-import { SearchState } from '../types';
+import { useState } from 'react';
 
-class SearchBar extends React.Component<object, SearchState> {
-  constructor(params: SearchState) {
-    super(params);
-    this.state = { searchValue: localStorage.getItem('searchValue') || '' };
-  }
+export default function SearchBar() {
+  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
 
-  render() {
-    const currState = this.state;
-    return (
-      <input
-        onChange={(event) => {
-          this.setState({ searchValue: event.target.value });
-          localStorage.setItem('searchValue', event.target.value.toString());
-        }}
-        type="text"
-        className="search-bar"
-        placeholder="Search"
-        value={currState.searchValue}
-      />
-    );
-  }
+  return (
+    <input
+      onChange={(e) => {
+        setSearchValue(e.target.value);
+        localStorage.setItem('searchValue', e.target.value.toString());
+      }}
+      type="search"
+      className="search-bar"
+      placeholder="Search"
+      value={searchValue}
+    />
+  );
 }
-
-export default SearchBar;

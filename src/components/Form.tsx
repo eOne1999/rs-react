@@ -34,8 +34,8 @@ function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
           {...register('author', {
             required: 'This field is required',
             pattern: {
-              value: /^[A-Z][a-z,.'-]+\s[A-Z][a-z,.'-]+$/,
-              message: 'Should contain the first and last name with a capital letter',
+              value: /^[A-Za-z'-]+\s[A-Za-z'-]+$/,
+              message: 'Should contain the first and last name',
             },
           })}
         />
