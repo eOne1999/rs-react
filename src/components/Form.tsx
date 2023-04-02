@@ -52,13 +52,13 @@ function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
           No
           <input type="radio" value="no" {...register('photographer', { required: true })} />
         </label>
-        {errors.photographer && <span>This field is required</span>}
+        {errors.photographer && <span className="form__error">This field is required</span>}
       </p>
 
       <label htmlFor="date">
         Date of photo
         <input type="date" className="form__item" {...register('date', { required: true })} />
-        {errors.date && <span>This field is required</span>}
+        {errors.date && <span className="form__error">This field is required</span>}
       </label>
 
       <label htmlFor="country">
@@ -78,7 +78,7 @@ function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
             </option>
           ))}
         </select>
-        {errors.country && <span>This field is required</span>}
+        {errors.country && <span className="form__error">This field is required</span>}
       </label>
 
       <label htmlFor="file">
@@ -89,7 +89,7 @@ function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
           accept="image/*"
           {...register('file', { required: true })}
         />
-        {errors.file && <span>This field is required</span>}
+        {errors.file && <span className="form__error">This field is required</span>}
       </label>
 
       <label htmlFor="confirmation">
@@ -99,7 +99,7 @@ function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
           className="form__item"
           {...register('confirmation', { required: true })}
         />
-        {errors.confirmation && <span>This field is required</span>}
+        {errors.confirmation && <span className="form__error">This field is required</span>}
       </label>
       <input type="submit" value="Submit" />
     </form>
