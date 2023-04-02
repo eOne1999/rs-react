@@ -3,6 +3,7 @@
   align-items: center;
   height: 100px;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .header__nav {
@@ -13,4 +14,8 @@
   & a:hover {
     color: $color-primary;
   }
+}
+
+.logo__img {
+  width: 200px;
 }

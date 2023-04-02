@@ -2,7 +2,6 @@
 /// <reference types="vite/client" />
 
 import { defineConfig } from 'vite';
-import { configDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
@@ -16,7 +15,6 @@ export default defineConfig({
       provider: 'c8',
       all: true,
       reporter: 'text',
-      exclude: [...configDefaults.coverage.exclude, 'src/main.tsx', 'src/types.ts'],
     },
   },
 })
