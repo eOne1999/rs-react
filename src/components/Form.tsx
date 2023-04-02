@@ -1,160 +1,109 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import InputField from './InputField';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import countries from '../assets/countriesList';
-import { TForm } from '../types';
-import FormCard from './FormCard';
+import { TForm, TFormData } from '../types';
 
-class Form extends React.Component<object, TForm> {
-  inputRef: React.RefObject<HTMLInputElement>;
+function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<TFormData>();
 
-  formRef: React.RefObject<HTMLFormElement>;
+  const formRef = React.useRef<HTMLFormElement>(null);
 
-  cardsRef: React.RefObject<HTMLDivElement>;
+  const submit: SubmitHandler<TFormData> = (data) => {
+    const formData = data;
+    const file = data.file ? data.file[0] : null;
+    const imgUrl = file ? URL.createObjectURL(file) : undefined;
+    formData.image = imgUrl;
+    setSubmitData([...submitData, formData]);
+    setPopupActive(true);
+    reset();
+  };
 
-  constructor(props: TForm) {
-    super(props);
-    this.state = {
-      formData: {
-        author: '',
-        photographer: '',
-        date: '',
-        country: '',
-        image: '',
-      },
-      submit: [],
-    };
+  return (
+    <form className="form" onSubmit={handleSubmit(submit)} ref={formRef}>
+      <label htmlFor="author">
+        Author
+        <input
+          type="text"
+          placeholder="Full Name"
+          className="form__item"
+          {...register('author', {
+            required: 'This field is required',
+            pattern: {
+              value: /^[A-Za-z'-]+\s[A-Za-z'-]+$/,
+              message: 'Should contain the first and last name',
+            },
+          })}
+        />
+        {errors.author && <span className="form__error">{errors.author?.message}</span>}
+      </label>
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+      <p>
+        Are you a professional photographer?
+        <label htmlFor="photographer">
+          Yes
+          <input type="radio" value="yes" {...register('photographer', { required: true })} />
+        </label>
+        <label htmlFor="photographer">
+          No
+          <input type="radio" value="no" {...register('photographer', { required: true })} />
+        </label>
+        {errors.photographer && <span className="form__error">This field is required</span>}
+      </p>
 
-    this.inputRef = React.createRef();
-    this.formRef = React.createRef();
-    this.cardsRef = React.createRef();
-  }
+      <label htmlFor="date">
+        Date of photo
+        <input type="date" className="form__item" {...register('date', { required: true })} />
+        {errors.date && <span className="form__error">This field is required</span>}
+      </label>
 
-  handleChange(event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
-    if (this.inputRef.current?.files?.length) {
-      const link = URL.createObjectURL(this.inputRef.current.files[0]);
-      this.setState((prevState) => ({
-        ...prevState,
-        formData: {
-          ...prevState.formData,
-          image: link,
-        },
-      }));
-    }
-
-    this.setState((prevState) => ({
-      ...prevState,
-      formData: {
-        ...prevState.formData,
-        [event.target.name]: event.target.value,
-      },
-    }));
-  }
-
-  handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    this.setState((prevState) => ({
-      ...prevState,
-      submit: [...prevState.submit, prevState.formData],
-    }));
-    this.formRef.current?.reset();
-  }
-
-  render() {
-    const currState = this.state;
-    return (
-      <>
-        <form className="form" onSubmit={this.handleSubmit} ref={this.formRef}>
-          <InputField
-            label="Author"
-            type="text"
-            name="author"
-            placeholder="Full Name"
-            className="form__item"
-            onChange={this.handleChange}
-          />
-          <p>
-            Are you a professional photographer?
-            <InputField
-              label="Yes"
-              type="radio"
-              name="photographer"
-              value="yes"
-              id="yes"
-              onChange={this.handleChange}
-            />
-            <InputField
-              label="No"
-              type="radio"
-              name="photographer"
-              value="no"
-              id="no"
-              onChange={this.handleChange}
-            />
-          </p>
-          <InputField
-            label="Date of photo"
-            type="date"
-            name="date"
-            className="form__item"
-            onChange={this.handleChange}
-          />
-          <label htmlFor="country">
-            Country
-            <select
-              id="country"
-              className="form__item"
-              aria-label="country"
-              defaultValue="default"
-              name="country"
-              onChange={this.handleChange}
-            >
-              <option value="default" disabled>
-                Select country
-              </option>
-              {countries.map((country) => (
-                <option key={country.code} value={country.name}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor="file">
-            <input
-              type="file"
-              name="file"
-              className="form__item"
-              accept="image/*"
-              onChange={this.handleChange}
-              ref={this.inputRef}
-            />
-          </label>
-          <InputField
-            label="I consent to my personal data"
-            type="checkbox"
-            name="confirmation"
-            className="form__item"
-          />
-          <input type="submit" value="Submit" />
-        </form>
-        <div className="cards" ref={this.cardsRef}>
-          {currState.submit.map((item) => (
-            <FormCard
-              key={uuidv4()}
-              author={item.author}
-              country={item.country}
-              date={item.date}
-              photographer={item.photographer}
-              image={item.image}
-            />
+      <label htmlFor="country">
+        Country
+        <select
+          className="form__item"
+          aria-label="country"
+          defaultValue=""
+          {...register('country', { required: true })}
+        >
+          <option value="" disabled>
+            Select country
+          </option>
+          {countries.map((country) => (
+            <option key={country.code} value={country.name}>
+              {country.name}
+            </option>
           ))}
-        </div>
-      </>
-    );
-  }
+        </select>
+        {errors.country && <span className="form__error">This field is required</span>}
+      </label>
+
+      <label htmlFor="file">
+        Upload photo
+        <input
+          type="file"
+          className="form__item"
+          accept="image/*"
+          {...register('file', { required: true })}
+        />
+        {errors.file && <span className="form__error">This field is required</span>}
+      </label>
+
+      <label htmlFor="confirmation">
+        I consent to my personal data
+        <input
+          type="checkbox"
+          className="form__item"
+          {...register('confirmation', { required: true })}
+        />
+        {errors.confirmation && <span className="form__error">This field is required</span>}
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
+  );
 }
 
 export default Form;
