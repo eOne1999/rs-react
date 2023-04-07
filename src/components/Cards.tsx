@@ -5,10 +5,11 @@ import Card from './Card';
 
 function Cards({ searchValue }: TSearch) {
   const [photos, setPhotos] = useState<RespPhotosSearch[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     (async () => {
-      const arrData: RespPhotosSearch[] = [];
       const controller = new AppController();
       let data: RespFromGet<RespPhotosSearch> = {
         photos: {
@@ -42,26 +43,24 @@ function Cards({ searchValue }: TSearch) {
             'date_upload, owner_name, url_sq, url_t, url_s, url_q, url_m, url_n, url_z, url_c,url_l, url_o',
         });
       }
-
-      data.photos.photo.forEach((photo) => {
-        arrData.push({
-          ...photo,
-        });
-      });
-      setPhotos(arrData);
+      setPhotos(data.photos.photo);
+      setIsLoading(false);
     })();
   }, [searchValue]);
 
   return (
     <>
       {searchValue && <p>Results for: {searchValue}</p>}
-      <div className="cards">
-        {photos
-          .sort(() => Math.random() - 0.5)
-          .map((elem) => (
-            <Card key={elem.id} {...elem} />
-          ))}
-      </div>
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && (
+        <div className="cards">
+          {photos
+            .sort(() => Math.random() - 0.5)
+            .map((elem) => (
+              <Card key={elem.id} {...elem} />
+            ))}
+        </div>
+      )}
     </>
   );
 }
