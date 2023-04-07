@@ -8,6 +8,7 @@ import Popup from '../components/Popup';
 function Forms() {
   const [data, setData] = useState<TFormData[]>([]);
   const [active, setActive] = useState(false);
+  const popupText = 'Card have been added!';
 
   return (
     <>
@@ -31,7 +32,7 @@ function Forms() {
           />
         ))}
       </div>
-      <Popup active={active} setActive={setActive} />
+      <Popup active={active} setActive={setActive} data={popupText} />
     </>
   );
 }

@@ -1,6 +1,10 @@
+.header__search-bar {
+  width: 350px;
+}
+
 .search-bar {
   height: 40px;
-  width: 350px;
+  width: 100%;
   border-radius: 8px;
   background-color: $color-bg-light;
   border: none;

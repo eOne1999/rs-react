@@ -17,6 +17,12 @@ export type TFormData = {
   confirmation: boolean;
 };
 
+export type TCard = {
+  card: RespPhotosSearch;
+  setPopupActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setActiveCard: React.Dispatch<React.SetStateAction<RespPhotosSearch>>;
+};
+
 export type TFormCard = {
   author: string;
   image: string | undefined;
@@ -28,6 +34,7 @@ export type TFormCard = {
 export type TPopup = {
   active: boolean;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
+  data: RespPhotosSearch | string;
 };
 
 export type TForm = {
@@ -112,8 +119,12 @@ export type RespPhotosSearch = {
   ispublic: number;
   isfriend: number;
   isfamily: number;
-  date_upload?: string;
+  dateupload?: string;
+  datetaken?: string;
   ownername?: string;
+  description?: {
+    _content: string;
+  };
   url_z?: string;
   url_sq?: string;
   url_t?: string;

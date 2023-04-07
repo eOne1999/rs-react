@@ -1,7 +1,8 @@
-import { RespPhotosSearch } from '../types';
+import { TCard } from '../types';
 
-function Card(props: RespPhotosSearch) {
-  const card = props;
+function Card(props: TCard) {
+  const params = props;
+  const { card } = props;
   const imgSrc =
     card.url_z ||
     card.url_c ||
@@ -13,8 +14,20 @@ function Card(props: RespPhotosSearch) {
     card.url_q ||
     card.url_l ||
     card.url_o;
+
+  const handleClick = () => {
+    params.setPopupActive(true);
+    params.setActiveCard(card);
+  };
+
   return (
-    <div className="cards__item card">
+    <div
+      className="cards__item card"
+      onClick={handleClick}
+      onKeyDown={handleClick}
+      role="button"
+      tabIndex={0}
+    >
       <img src={imgSrc} alt={card.title} className="card__img" />
       <div className="card__description">
         <p className="card__title">{card.title}</p>
