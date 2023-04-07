@@ -1,0 +1,14 @@
+.search-bar {
+  height: 40px;
+  width: 350px;
+  border-radius: 8px;
+  background-color: $color-bg-light;
+  border: none;
+  transition: .5s;
+  padding: 10px;
+
+  &:focus-visible {
+    outline: none;
+    background-color: $color-bg-light-focus;
+  }
+}

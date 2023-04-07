@@ -1,22 +1,5 @@
 import React from 'react';
 
-export interface ICard {
-  format: string;
-  width: number;
-  height: number;
-  filename: string;
-  id: number;
-  author: string;
-  author_url: string;
-  post_url: string;
-}
-
-export type TCard = {
-  id: string;
-  src: string;
-  title: string;
-};
-
 export type TCountry = {
   name: string;
   dial_code: string;
@@ -52,6 +35,11 @@ export type TForm = {
   setSubmitData: React.Dispatch<React.SetStateAction<TFormData[]>>;
   popupActive: boolean;
   setPopupActive: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export type TSearch = {
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export interface GetResp {
@@ -124,11 +112,29 @@ export type RespPhotosSearch = {
   ispublic: number;
   isfriend: number;
   isfamily: number;
+  date_upload?: string;
+  ownername?: string;
+  url_z?: string;
+  url_sq?: string;
+  url_t?: string;
+  url_s?: string;
+  url_q?: string;
+  url_m?: string;
+  url_n?: string;
+  url_c?: string;
+  url_l?: string;
+  url_o?: string;
 };
 
 export type ReqPopular = {
   user_id?: string;
   sort?: string;
+  extras?: string;
+  per_page?: string;
+  page?: string;
+};
+
+export type ReqResent = {
   extras?: string;
   per_page?: string;
   page?: string;

@@ -11,6 +11,7 @@
   background-color: $color-bg-add;
   flex-grow: 1;
   transition: .5s;
+  position: relative;
 
   &:hover {
     cursor: pointer;
@@ -27,9 +28,25 @@
 .card__description {
   padding: 0 15px;
   font-size: 1.6rem;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+
+.card__title {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card__author {
+  color: $color-text-light;
+  font-size: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   &:hover {
     color: $color-primary;
   }

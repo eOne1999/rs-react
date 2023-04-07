@@ -1,4 +1,4 @@
-import { ReqInfo, ReqPhotosSearch, ReqPopular } from '../types';
+import { ReqInfo, ReqPhotosSearch, ReqPopular, ReqResent } from '../types';
 import AppLoader from './appLoader';
 
 class AppController extends AppLoader {
@@ -17,6 +17,16 @@ class AppController extends AppLoader {
       options: {
         ...params,
         method: 'flickr.photos.getPopular',
+      },
+    });
+    return data;
+  }
+
+  async getRecent<RespFromGet>(params: ReqResent): Promise<RespFromGet> {
+    const data: RespFromGet = await super.getResp({
+      options: {
+        ...params,
+        method: 'flickr.photos.getRecent',
       },
     });
     return data;

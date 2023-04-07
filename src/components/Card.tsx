@@ -1,16 +1,27 @@
-import { TCard } from '../types';
+import { RespPhotosSearch } from '../types';
 
-function Card(props: TCard) {
+function Card(props: RespPhotosSearch) {
   const card = props;
-  const imgUrl = card.src;
+  const imgSrc =
+    card.url_z ||
+    card.url_c ||
+    card.url_n ||
+    card.url_m ||
+    card.url_sq ||
+    card.url_t ||
+    card.url_s ||
+    card.url_q ||
+    card.url_l ||
+    card.url_o;
   return (
     <div className="cards__item card">
-      <img src={imgUrl} alt={card.id} className="card__img" />
-      <p className="card__description">
-        <a href={card.src} className="card__author">
-          {card.title}
+      <img src={imgSrc} alt={card.title} className="card__img" />
+      <div className="card__description">
+        <p className="card__title">{card.title}</p>
+        <a href={`https://www.flickr.com/people/${card.owner}`} className="card__author">
+          By {card.ownername}
         </a>
-      </p>
+      </div>
     </div>
   );
 }
