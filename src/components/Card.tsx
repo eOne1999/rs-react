@@ -1,14 +1,14 @@
-import { ICard } from '../types';
+import { TCard } from '../types';
 
-function Card(props: ICard) {
+function Card(props: TCard) {
   const card = props;
-  const imgUrl = `${card.post_url}/download?w=640`;
+  const imgUrl = card.src;
   return (
     <div className="cards__item card">
-      <img src={imgUrl} alt={card.filename} className="card__img" />
+      <img src={imgUrl} alt={card.id} className="card__img" />
       <p className="card__description">
-        <a href={card.author_url} className="card__author">
-          {card.author}
+        <a href={card.src} className="card__author">
+          {card.title}
         </a>
       </p>
     </div>

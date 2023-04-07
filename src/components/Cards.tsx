@@ -1,24 +1,37 @@
-import cardsData from '../assets/cardsData';
+import { useEffect, useState } from 'react';
+import AppController from '../controller/controller';
+import { RespFromGet, RespPhotosSearch, TCard } from '../types';
+import getImageLink from '../utils/getImageLink';
 import Card from './Card';
 
 function Cards() {
+  const [photos, setPhotos] = useState<TCard[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const arrData: TCard[] = [];
+      const controller = new AppController();
+      const data: RespFromGet<RespPhotosSearch> = await controller.getPhotosSearch({
+        privacy_filter: '1',
+        content_type: '1',
+        tags: 'nature',
+      });
+      data.photos.photo.forEach((photo) => {
+        arrData.push({
+          ...photo,
+          src: getImageLink(photo),
+        });
+      });
+      setPhotos(arrData.slice(0, 30));
+    })();
+  }, []);
+
   return (
     <div className="cards">
-      {cardsData
+      {photos
         .sort(() => Math.random() - 0.5)
-        .slice(0, 30)
         .map((elem) => (
-          <Card
-            key={elem.id}
-            format={elem.format}
-            width={elem.width}
-            height={elem.height}
-            filename={elem.filename}
-            id={elem.id}
-            author={elem.author}
-            author_url={elem.author_url}
-            post_url={elem.post_url}
-          />
+          <Card key={elem.id} {...elem} />
         ))}
     </div>
   );

@@ -6,7 +6,7 @@ function Header() {
     <header className="header">
       <div className="header__logo">
         <a href="/">
-          <img src="/logo.svg" alt="PhotoStock logo" className="logo__img" />
+          <img src="./src/assets/logo.svg" alt="PhotoStock logo" className="logo__img" />
         </a>
       </div>
       <div className="header__search-bar">
