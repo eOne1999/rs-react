@@ -1,4 +1,4 @@
-import { TCard } from '../types';
+import { TCard } from '../../types';
 
 function Card(props: TCard) {
   const params = props;
@@ -31,7 +31,12 @@ function Card(props: TCard) {
       <img src={imgSrc} alt={card.title} className="card__img" />
       <div className="card__description">
         <p className="card__title">{card.title}</p>
-        <a href={`https://www.flickr.com/people/${card.owner}`} className="card__author">
+        <a
+          href={`https://www.flickr.com/people/${card.owner}`}
+          target="_blank"
+          className="card__author"
+          rel="noreferrer"
+        >
           By {card.ownername}
         </a>
       </div>

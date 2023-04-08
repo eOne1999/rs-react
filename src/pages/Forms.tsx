@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import Form from '../components/Form';
+import Form from '../components/Form/Form';
 import { TFormData } from '../types';
-import FormCard from '../components/FormCard';
-import Popup from '../components/Popup';
+import FormCard from '../components/FormCard/FormCard';
+import Popup from '../components/Popup/Popup';
 
 function Forms() {
   const [data, setData] = useState<TFormData[]>([]);

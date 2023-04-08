@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import SearchBar from './SearchBar';
-import { TSearch } from '../types';
+import SearchBar from '../SearchBar/SearchBar';
+import { TSearch } from '../../types';
 
 function Header({ searchValue, setSearchValue }: TSearch) {
   return (

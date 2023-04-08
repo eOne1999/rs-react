@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import AppController from '../controller/controller';
-import { RespFromGet, RespPhotosSearch, TSearch } from '../types';
-import Card from './Card';
-import Popup from './Popup';
+import AppController from '../../controller/controller';
+import { RespFromGet, RespPhotosSearch, TSearch } from '../../types';
+import Card from '../Card/Card';
+import Popup from '../Popup/Popup';
 
 function Cards({ searchValue }: TSearch) {
   const [photos, setPhotos] = useState<RespPhotosSearch[]>([]);
@@ -13,7 +13,7 @@ function Cards({ searchValue }: TSearch) {
     owner: '',
     secret: '',
     server: '',
-    farm: '',
+    farm: 0,
     title: '',
     ispublic: 0,
     isfriend: 0,

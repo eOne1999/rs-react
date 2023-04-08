@@ -1,4 +1,4 @@
-import Cards from '../components/Cards';
+import Cards from '../components/Cards/Cards';
 import { TSearch } from '../types';
 
 function Home({ searchValue, setSearchValue }: TSearch) {

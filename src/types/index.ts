@@ -116,7 +116,7 @@ export type RespPhotosSearch = {
   owner: string;
   secret: string;
   server: string;
-  farm: string;
+  farm: number;
   title: string;
   ispublic: number;
   isfriend: number;
