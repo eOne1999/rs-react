@@ -10,17 +10,16 @@ const params: TCard = {
     secret: 'b5519405f6',
     server: '65535',
     farm: 66,
-    title: 'Wife - 9516',
+    title: 'Beautiful photo',
     ispublic: 1,
     isfriend: 0,
     isfamily: 0,
     datetaken: '2023-04-07 00:00:00',
     ownername: 'oterrason',
     description: {
-      _content:
-        'My very cute and beautiful wife.\n—\n- Apple iPhone 13 Pro Max.\n- Light &amp; Motion StellaPro CLx10 LED COB in a double diffused Westcott 12x36-in Rapidbox Switch soft box for key.\n- Lastolite 32-in HaloCompact Soft Silver Reflector for fill.',
+      _content: 'Text description',
     },
-    url_z: 'https://live.staticflickr.com/65535/52801567905_b5519405f6_z.jpg',
+    url_z: 'https://live.staticflickr.com/65535/51314478617_145903ef25_z.jpg',
   },
 
   setPopupActive(): void {},
