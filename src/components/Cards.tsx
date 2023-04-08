@@ -24,19 +24,10 @@ function Cards({ searchValue }: TSearch) {
     setIsLoading(true);
     (async () => {
       const controller = new AppController();
-      let data: RespFromGet<RespPhotosSearch> = {
-        photos: {
-          page: 0,
-          pages: 0,
-          perpage: 0,
-          total: 0,
-          photo: [],
-        },
-        stat: '',
-      };
+      let data: RespFromGet<RespPhotosSearch>;
 
       if (searchValue) {
-        data = await controller.getPhotosSearch({
+        data = (await controller.getPhotosSearch({
           privacy_filter: '1',
           safe_search: '3',
           content_type: '1',
@@ -44,9 +35,9 @@ function Cards({ searchValue }: TSearch) {
           sort: 'relevance',
           extras:
             'description, date_taken, owner_name, url_sq, url_t, url_s, url_q, url_m, url_n, url_z, url_c,url_l, url_o',
-        });
+        })) as RespFromGet<RespPhotosSearch>;
       } else {
-        data = await controller.getPhotosSearch({
+        data = (await controller.getPhotosSearch({
           privacy_filter: '1',
           safe_search: '3',
           content_type: '1',
@@ -54,12 +45,16 @@ function Cards({ searchValue }: TSearch) {
           sort: 'interestingness-desc',
           extras:
             'description, date_taken, owner_name, url_sq, url_t, url_s, url_q, url_m, url_n, url_z, url_c,url_l, url_o',
-        });
+        })) as RespFromGet<RespPhotosSearch>;
       }
+
       setPhotos(() => {
-        return data.photos.photo.sort(() => Math.random() - 0.5);
+        if (data.photos) {
+          setIsLoading(false);
+          return data.photos?.photo.sort(() => Math.random() - 0.5);
+        }
+        throw Error('Failed to get data');
       });
-      setIsLoading(false);
     })();
   }, [searchValue]);
 
@@ -69,14 +64,15 @@ function Cards({ searchValue }: TSearch) {
       {isLoading && <p>Loading...</p>}
       {!isLoading && (
         <div className="cards">
-          {photos.map((elem) => (
-            <Card
-              key={elem.id}
-              card={elem}
-              setPopupActive={setPopupActive}
-              setActiveCard={setActiveCard}
-            />
-          ))}
+          {photos &&
+            photos.map((elem) => (
+              <Card
+                key={elem.id}
+                card={elem}
+                setPopupActive={setPopupActive}
+                setActiveCard={setActiveCard}
+              />
+            ))}
         </div>
       )}
       <Popup active={popupActive} setActive={setPopupActive} data={activeCard} />

@@ -32,6 +32,8 @@ function Popup({ active, setActive, data }: TPopup) {
     photo.url_l ||
     photo.url_o;
 
+  const description = photo.description?._content.replace(/<(.|\n)*?>/g, '').slice(0, 150);
+
   return (
     <div
       className={active ? 'popup active' : 'popup'}
@@ -51,9 +53,7 @@ function Popup({ active, setActive, data }: TPopup) {
               {photo.title && <p>{photo.title}</p>}
               {photo.ownername && <p>Author: {photo.ownername}</p>}
               {photo.datetaken && <p>Date: {photo.datetaken}</p>}
-              {photo.description?._content && (
-                <p>Description: {photo.description?._content.slice(0, 150)}</p>
-              )}
+              {description && <p>Description: {description}</p>}
             </div>
           </div>
         )}

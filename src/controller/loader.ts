@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { GetResp, LoaderOptions } from '../types';
+import { GetResp, LoaderOptions, RespFromGet } from '../types';
 
 class Loader {
   baseLink: string;
@@ -11,7 +11,7 @@ class Loader {
     this.options = options;
   }
 
-  async getResp<T>({ options }: GetResp): Promise<T> {
+  async getResp<T>({ options }: GetResp): Promise<RespFromGet<T>> {
     try {
       const res = await fetch(this.makeUrl(options), { method: 'GET' });
       if (!res.ok) {
@@ -19,11 +19,16 @@ class Loader {
           console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
         throw Error(res.statusText);
       }
-      const data = (await res.json()) as T;
+
+      const data = (await res.json()) as RespFromGet<T>;
+      if (data.stat !== 'ok') {
+        console.log(data.message);
+        throw Error(data.message);
+      }
+
       return data;
     } catch (err) {
-      console.error(err);
-      throw err;
+      throw Error();
     }
   }
 

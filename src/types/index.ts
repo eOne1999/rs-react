@@ -60,7 +60,7 @@ export type LoaderOptions = {
 };
 
 export interface RespFromGet<T> {
-  photos: {
+  photos?: {
     page: number;
     pages: number;
     perpage: number;
@@ -68,6 +68,8 @@ export interface RespFromGet<T> {
     photo: T[];
   };
   stat: string;
+  code?: string;
+  message?: string;
 }
 
 export type ReqPhotosSearch = {
@@ -135,85 +137,4 @@ export type RespPhotosSearch = {
   url_c?: string;
   url_l?: string;
   url_o?: string;
-};
-
-export type ReqPopular = {
-  user_id?: string;
-  sort?: string;
-  extras?: string;
-  per_page?: string;
-  page?: string;
-};
-
-export type ReqResent = {
-  extras?: string;
-  per_page?: string;
-  page?: string;
-};
-
-export type ReqInfo = {
-  photo_id: string;
-  secret?: string;
-};
-
-export type RespInfo = {
-  photo: {
-    id: string;
-    secret: string;
-    server: string;
-    farm: number;
-    dateuploaded: string;
-    isfavorite: number;
-    license: number;
-    safety_level: number;
-    rotation: number;
-    owner: {
-      nsid: string;
-      username: string;
-      realname: string;
-      location: string;
-      iconserver: string;
-      iconfarm: number;
-      path_alias: string;
-      gift: {
-        gift_eligible: string;
-        eligible_durations: string[];
-        new_flow: string;
-      };
-    };
-    title: { _content: string };
-    description: { _content: string };
-    visibility: { ispublic: number; isfriend: number; isfamily: number };
-    dates: {
-      posted: string;
-      taken: string;
-      takengranularity: number;
-      takenunknown: number;
-      lastupdate: string;
-    };
-    views: number;
-    editability: { cancomment: number; canaddmeta: number };
-    publiceditability: { cancomment: number; canaddmeta: number };
-    usage: { candownload: number; canblog: number; canprint: number; canshare: number };
-    comments: { _content: number };
-    notes: {
-      note: [];
-    };
-    people: { haspeople: number };
-    tags: {
-      tag: {
-        id: string;
-        author: string;
-        authorname: string;
-        raw: string;
-        _content: string;
-        machine_tag: string;
-      }[];
-    };
-    urls: {
-      url: { type: string; _content: string }[];
-    };
-    media: string;
-  };
-  stat: string;
 };
