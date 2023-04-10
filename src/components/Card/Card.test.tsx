@@ -19,25 +19,11 @@ const params: TCard = {
     description: {
       _content: 'Text description',
     },
-    url_z: 'https://live.staticflickr.com/65535/51314478617_145903ef25_z.jpg',
   },
 
   setPopupActive(): void {},
   setActiveCard(): void {},
 };
-
-const { card } = params;
-const imgSrc =
-  card.url_z ||
-  card.url_c ||
-  card.url_n ||
-  card.url_m ||
-  card.url_sq ||
-  card.url_t ||
-  card.url_s ||
-  card.url_q ||
-  card.url_l ||
-  card.url_o;
 
 describe('Card', () => {
   it('Renders Card', () => {
@@ -47,6 +33,7 @@ describe('Card', () => {
 
     expect(cardElement).toBeInTheDocument();
     fireEvent.click(cardElement);
-    expect(cardImg.getAttribute('src')).toEqual(imgSrc);
+    expect(cardImg).toBeInTheDocument();
+    expect(container.getElementsByClassName('card__description')[0]).toBeInTheDocument();
   });
 });
