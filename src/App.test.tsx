@@ -4,6 +4,11 @@ import { MemoryRouter } from 'react-router-dom';
 import { App, WrappedApp } from './App';
 
 describe('App', () => {
+  let searchValue = '';
+  const setSearchValue = () => {
+    searchValue = 'apple';
+  };
+
   it('Renders home page', () => {
     render(<WrappedApp />);
     expect(
@@ -16,7 +21,7 @@ describe('App', () => {
   it('Renders not found if invalid path', () => {
     render(
       <MemoryRouter initialEntries={['/invalid-path']}>
-        <App />
+        <App searchValue={searchValue} setSearchValue={setSearchValue} />
       </MemoryRouter>
     );
     expect(

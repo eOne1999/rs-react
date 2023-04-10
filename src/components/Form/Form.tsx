@@ -1,7 +1,7 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import countries from '../assets/countriesList';
-import { TForm, TFormData } from '../types';
+import countries from '../../data/countriesList';
+import { TForm, TFormData } from '../../types';
 
 function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
   const {

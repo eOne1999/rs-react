@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import Form from '../components/Form';
+import Form from '../components/Form/Form';
 import { TFormData } from '../types';
-import FormCard from '../components/FormCard';
-import Popup from '../components/Popup';
+import FormCard from '../components/FormCard/FormCard';
+import Popup from '../components/Popup/Popup';
 
 function Forms() {
   const [data, setData] = useState<TFormData[]>([]);
   const [active, setActive] = useState(false);
+  const popupText = 'Card have been added!';
 
   return (
     <>
@@ -31,7 +32,7 @@ function Forms() {
           />
         ))}
       </div>
-      <Popup active={active} setActive={setActive} />
+      <Popup active={active} setActive={setActive} data={popupText} />
     </>
   );
 }

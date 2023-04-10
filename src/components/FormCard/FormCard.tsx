@@ -1,4 +1,4 @@
-import { TFormCard } from '../types';
+import { TFormCard } from '../../types';
 
 function FormCard(props: TFormCard) {
   const card = props;

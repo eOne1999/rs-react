@@ -1,16 +1,17 @@
 import { NavLink } from 'react-router-dom';
-import SearchBar from './SearchBar';
+import SearchBar from '../SearchBar/SearchBar';
+import { TSearch } from '../../types';
 
-function Header() {
+function Header({ searchValue, setSearchValue }: TSearch) {
   return (
     <header className="header">
       <div className="header__logo">
         <a href="/">
-          <img src="/logo.svg" alt="PhotoStock logo" className="logo__img" />
+          <img src="./src/assets/logo.svg" alt="PhotoStock logo" className="logo__img" />
         </a>
       </div>
       <div className="header__search-bar">
-        <SearchBar />
+        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
       <nav className="header__nav">
         <NavLink to="/">Home</NavLink>

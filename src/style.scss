@@ -7,10 +7,9 @@
 @import './sass/normalize';
 
 // Components
-@import "./components/Header";
-@import "./components/Cards";
-@import "./components/Form";
-@import "./components/FormCard";
-@import "./components/popup";
-
-// Pages
+@import "./components/Header/header";
+@import "./components/Cards/cards";
+@import "./components/Form/form";
+@import "./components/FormCard/formCard";
+@import "./components/Popup/popup";
+@import "./components/SearchBar/searchBar";
