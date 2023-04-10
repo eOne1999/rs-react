@@ -1,6 +1,6 @@
 import { KeyboardEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TSearch } from '../types';
+import { TSearch } from '../../types';
 
 export default function SearchBar({ setSearchValue }: TSearch) {
   const navigate = useNavigate();

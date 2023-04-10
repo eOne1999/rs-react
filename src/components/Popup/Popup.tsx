@@ -1,4 +1,4 @@
-import { RespPhotosSearch, TPopup } from '../types';
+import { RespPhotosSearch, TPopup } from '../../types';
 
 function Popup({ active, setActive, data }: TPopup) {
   let photo: RespPhotosSearch = {
@@ -6,7 +6,7 @@ function Popup({ active, setActive, data }: TPopup) {
     owner: '',
     secret: '',
     server: '',
-    farm: '',
+    farm: 0,
     title: '',
     ispublic: 0,
     isfriend: 0,
