@@ -38,8 +38,6 @@ export type TPopup = {
 };
 
 export type TForm = {
-  submitData: TFormData[];
-  setSubmitData: React.Dispatch<React.SetStateAction<TFormData[]>>;
   popupActive: boolean;
   setPopupActive: React.Dispatch<React.SetStateAction<boolean>>;
 };
