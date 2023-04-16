@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { GetResp, LoaderOptions, RespFromGet } from '../types';
 
 class Loader {
@@ -16,19 +15,19 @@ class Loader {
       const res = await fetch(this.makeUrl(options), { method: 'GET' });
       if (!res.ok) {
         if (res.status === 401 || res.status === 404)
-          console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
-        throw Error(res.statusText);
+          console.error(`Sorry, but there is ${res.status} error: ${res.statusText}`);
+        throw new Error(res.statusText);
       }
 
       const data = (await res.json()) as RespFromGet<T>;
       if (data.stat !== 'ok') {
-        console.log(data.message);
-        throw Error(data.message);
+        console.error(data.message);
+        throw new Error(data.message);
       }
 
       return data;
     } catch (err) {
-      throw Error();
+      throw Error('Something went wrong!');
     }
   }
 

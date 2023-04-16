@@ -1,8 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
-import { TSearch } from '../../types';
 
-function Header({ searchValue, setSearchValue }: TSearch) {
+function Header() {
   return (
     <header className="header">
       <div className="header__logo">
@@ -11,7 +10,7 @@ function Header({ searchValue, setSearchValue }: TSearch) {
         </a>
       </div>
       <div className="header__search-bar">
-        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
+        <SearchBar />
       </div>
       <nav className="header__nav">
         <NavLink to="/">Home</NavLink>

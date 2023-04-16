@@ -3,7 +3,7 @@ import Loader from './loader';
 class AppLoader extends Loader {
   constructor() {
     super('https://www.flickr.com/services/rest/', {
-      api_key: '0b86493e77ea0dd7c88d77fc646b5bf3',
+      api_key: '0b86493e77ea0dd7c88d77fc646b5bf',
       format: 'json',
       nojsoncallback: '1',
     });

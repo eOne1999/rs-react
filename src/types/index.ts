@@ -46,7 +46,7 @@ export type TForm = {
 
 export type TSearch = {
   searchValue: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  setSearchValue: (value: string) => void;
 };
 
 export interface GetResp {

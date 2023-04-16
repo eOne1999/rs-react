@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import AppController from '../../controller/controller';
-import { RespFromGet, RespPhotosSearch, TSearch } from '../../types';
+import { RespFromGet, RespPhotosSearch } from '../../types';
 import Card from '../Card/Card';
 import Popup from '../Popup/Popup';
+import { useAppSelector } from '../../hooks';
 
-function Cards({ searchValue }: TSearch) {
+function Cards() {
+  const searchValue = useAppSelector((state) => state.search.searchValue);
+
   const [photos, setPhotos] = useState<RespPhotosSearch[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [popupActive, setPopupActive] = useState(false);

@@ -1,11 +1,13 @@
 import Cards from '../components/Cards/Cards';
-import { TSearch } from '../types';
+// import { TSearch } from '../types';
 
-function Home({ searchValue, setSearchValue }: TSearch) {
+function Home() {
+  // function Home({ searchValue, setSearchValue }: TSearch) {
   return (
     <>
       <h1>Home</h1>
-      <Cards searchValue={searchValue} setSearchValue={setSearchValue} />
+      <Cards />
+      {/* <Cards searchValue={searchValue} setSearchValue={setSearchValue} /> */}
     </>
   );
 }
