@@ -1,16 +1,13 @@
 import { describe, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { rest } from 'msw';
+import { Provider } from 'react-redux';
 import Cards from './Cards';
 import server from '../../mocks/server';
+import store from '../../store';
 
 describe('Cards', () => {
   const url = 'https://www.flickr.com/services/rest/';
-  let searchValue = '';
-  const setSearchValue = () => {
-    searchValue = 'banana';
-  };
-
   const body = [
     {
       id: '1',
@@ -51,7 +48,9 @@ describe('Cards', () => {
   it('Test', async () => {
     server.use(rest.get(url, (req, res, ctx) => res(ctx.status(200), ctx.json(body))));
     const { findByText } = render(
-      <Cards searchValue={searchValue} setSearchValue={setSearchValue} />
+      <Provider store={store}>
+        <Cards />
+      </Provider>
     );
     it('Fetch and render Photo 1', async () => {
       expect(await findByText('Photo 1')).toBeInTheDocument();
@@ -59,15 +58,5 @@ describe('Cards', () => {
     it('Fetch and render Photo 2', async () => {
       expect(await findByText('Photo 2')).toBeInTheDocument();
     });
-  });
-
-  it('Renders Cards with searchValue', () => {
-    let search = 'apple';
-    const setSearch = () => {
-      search = 'banana';
-    };
-    render(<Cards searchValue={search} setSearchValue={setSearch} />);
-    expect(screen.getByText(/Results for:/i)).toBeInTheDocument();
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 });
