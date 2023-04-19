@@ -1,15 +1,16 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import Home from './Home';
+import store from '../store';
 
 describe('Home', () => {
-  let searchValue = '';
-  const setSearchValue = () => {
-    searchValue = 'apple';
-  };
-
   it('Renders Home', () => {
-    render(<Home searchValue={searchValue} setSearchValue={setSearchValue} />);
+    render(
+      <Provider store={store}>
+        <Home />
+      </Provider>
+    );
     expect(
       screen.getByRole('heading', {
         level: 1,

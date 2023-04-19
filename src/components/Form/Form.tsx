@@ -2,8 +2,11 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import countries from '../../data/countriesList';
 import { TForm, TFormData } from '../../types';
+import { useActions } from '../../hooks';
 
-function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
+function Form({ setPopupActive }: TForm) {
+  const { setFormCard } = useActions();
+
   const {
     register,
     handleSubmit,
@@ -14,11 +17,11 @@ function Form({ submitData, setSubmitData, setPopupActive }: TForm) {
   const formRef = React.useRef<HTMLFormElement>(null);
 
   const submit: SubmitHandler<TFormData> = (data) => {
-    const formData = data;
     const file = data.file ? data.file[0] : null;
     const imgUrl = file ? URL.createObjectURL(file) : undefined;
-    formData.image = imgUrl;
-    setSubmitData([...submitData, formData]);
+    data.image = imgUrl;
+    delete data.file;
+    setFormCard(data);
     setPopupActive(true);
     reset();
   };

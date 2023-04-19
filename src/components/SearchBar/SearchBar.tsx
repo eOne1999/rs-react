@@ -1,23 +1,20 @@
 import { KeyboardEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TSearch } from '../../types';
+import { useActions, useAppSelector } from '../../hooks';
 
-export default function SearchBar({ setSearchValue }: TSearch) {
+function SearchBar() {
   const navigate = useNavigate();
-  const [currSearch, setCurrSearch] = useState(localStorage.getItem('searchValue') || '');
+  const searchValue = useAppSelector((state) => state.search.searchValue);
+  const { setSearchValue } = useActions();
+  const [currSearch, setCurrSearch] = useState(searchValue || '');
 
-  const handleInputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrSearch(e.target.value);
-    localStorage.setItem('searchValue', e.target.value.toString());
-
-    if (e.target.value === '') {
-      setSearchValue(e.target.value);
-    }
+  const handleInputSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrSearch(event.target.value.toString());
   };
 
-  const handleSearch = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      setSearchValue(e.currentTarget.value);
+  const handleSearch = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setSearchValue(event.currentTarget.value);
       navigate('/');
     }
   };
@@ -25,9 +22,7 @@ export default function SearchBar({ setSearchValue }: TSearch) {
   return (
     <input
       onChange={handleInputSearch}
-      onKeyDown={(e) => {
-        handleSearch(e);
-      }}
+      onKeyDown={handleSearch}
       type="search"
       className="search-bar"
       placeholder="Search"
@@ -35,3 +30,5 @@ export default function SearchBar({ setSearchValue }: TSearch) {
     />
   );
 }
+
+export default SearchBar;

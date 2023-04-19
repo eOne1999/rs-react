@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { rest } from 'msw';
 import { RespFromGet, RespPhotosSearch } from '../types';
 import server from './server';
