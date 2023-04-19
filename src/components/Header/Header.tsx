@@ -1,13 +1,13 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 
 function Header() {
   return (
     <header className="header">
       <div className="header__logo">
-        <a href="/">
+        <Link to="/">
           <img src="./src/assets/logo.svg" alt="PhotoStock logo" className="logo__img" />
-        </a>
+        </Link>
       </div>
       <div className="header__search-bar">
         <SearchBar />

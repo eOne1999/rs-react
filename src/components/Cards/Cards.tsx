@@ -26,20 +26,18 @@ function Cards() {
   });
 
   let errorMsg = '';
-  let arr: RespPhotosSearch[] = [];
+  let photos: RespPhotosSearch[] = [];
 
-  if (data && data.stat !== 'ok') {
-    errorMsg = data.message as string;
+  if (!error && data) {
+    if (data.stat !== 'ok' && data.message) errorMsg = data.message;
+    if (data.photos) photos = data.photos.photo;
   }
-
-  if (data?.photos?.photo) arr = data.photos.photo;
-  const photos = [...arr].sort(() => Math.random() - 0.5);
 
   return (
     <>
       {searchValue && <p>Results for: {searchValue}</p>}
       {isFetching && <p>Loading...</p>}
-      {errorMsg && <p>{errorMsg}</p>}
+      {errorMsg && <p>Sorry, but there is error: {errorMsg}</p>}
       {!isFetching && !error && !errorMsg && (
         <div className="cards">
           {photos &&
