@@ -17,10 +17,10 @@ function Form({ setPopupActive }: TForm) {
   const formRef = React.useRef<HTMLFormElement>(null);
 
   const submit: SubmitHandler<TFormData> = (data) => {
-    const formData = data;
     const file = data.file ? data.file[0] : null;
     const imgUrl = file ? URL.createObjectURL(file) : undefined;
-    formData.image = imgUrl;
+    data.image = imgUrl;
+    delete data.file;
     setFormCard(data);
     setPopupActive(true);
     reset();

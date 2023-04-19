@@ -13,7 +13,7 @@ export type TFormData = {
   date: string;
   country: string;
   image: string | undefined;
-  file: FileList;
+  file?: FileList;
   confirmation: boolean;
 };
 
